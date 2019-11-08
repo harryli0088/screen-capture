@@ -11,7 +11,7 @@ function ScreenCapture(options={}) {
     return new Promise(async (resolve, reject) => {
       try {
         self.displayMediaOptions = options.displayMediaOptions || { audio: false };
-        self.video  = options.video || document.createElement("video");
+        self.video  = self.video || options.video || document.createElement("video"); //use the existing video if it exists, else use the options video if it exists, else default to a new video element
         self.video.autoplay = true;
         self.video.srcObject = await navigator.mediaDevices.getDisplayMedia(self.displayMediaOptions);
         self.video.addEventListener('loadedmetadata', function() {

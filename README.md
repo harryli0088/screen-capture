@@ -48,16 +48,43 @@ capture.init().then(function() {
 })
 ```
 
-## Example
-[/example/index.html](/example/index.html)
-
 
 ## new ScreenCapture([options])
 - `options` {Object}
   - `displayMediaOptions` {Object} optional display media options for video
   - `video` {Object} optional DOM video element, otherwise an invisible video element will be created
 
+### ScreenCapture.init()
+Returns a Promise that, when resolved, indicates you can begin capturing.
+
+```js
+capture.init().then(function() {
+  //you can begin capturing
+}).catch(function(err) {
+  console.log(err); //the user probably denied permission to screen capture
+})
+```
+
+### ScreenCapture.capture()
+Returns a Promise that, when resolved, passes the dataURL of the screen capture
+
+```js
+capture.capture().then(function(dataURL) {
+  //do something with the dataURL here
+});
+```
+
+### ScreenCapture.stop()
+Stops screen sharing
+
+
+## Example
+[/example/index.html](/example/index.html)
+
 ## Acknowledgements
 This was created using the examples found here:
 - MDN - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API/Using_Screen_Capture
 - Kaiido - https://stackoverflow.com/a/32708998
+
+## License
+MIT
