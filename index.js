@@ -11,7 +11,7 @@ function ScreenCapture(options={}) {
     self.displayMediaOptions = options.displayMediaOptions || { audio: false };
     self.video  = options.video || document.createElement("video");
     self.video.autoplay = true;
-    
+
     try {
       self.video.srcObject = await navigator.mediaDevices.getDisplayMedia(self.displayMediaOptions);
       self.video.addEventListener('loadedmetadata', function() {
@@ -45,6 +45,6 @@ function ScreenCapture(options={}) {
   }
 }
 
-if(typeof modules !== "undefined") {
-  modules.export = ScreenCapture;
+if(typeof module !== "undefined") {
+  module.exports = ScreenCapture;
 }
