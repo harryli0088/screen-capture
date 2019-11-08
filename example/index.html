@@ -37,9 +37,10 @@
 
   //set event listeners for the start and stop buttons
   startElem.addEventListener("click", function(evt) {
-    capture.capture(appendImgToDocument); //immediately take a capture when the video is ready
-    interval = setInterval(capture.capture, 5000, appendImgToDocument); //set an interval to periodically take captures
-
+    capture.init(function() {
+      capture.capture(appendImgToDocument); //immediately take a capture when the video is ready
+      interval = setInterval(capture.capture, 5000, appendImgToDocument); //set an interval to periodically take captures
+    })
   }, false);
 
   stopElem.addEventListener("click", function(evt) {

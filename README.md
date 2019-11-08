@@ -3,6 +3,7 @@
 capture your screen with pure JavaScript
 
 ## Usage
+First instantiate ScreenCapture then call the init() function with a callback which will prompt the user for permission. Once the user gives permission, the callback will be fired and you can begin getting screen captures
 
 ### HTML
 ```html
@@ -14,9 +15,13 @@ const capture = new ScreenCapture({
   video: document.getElementById("video")
 });
 
-capture.capture(function(dataURL) {
-  //do something with the data URL here
-});
+capture.init(function() {
+  capture.capture(function(dataURL) {
+    //do something with the dataURL here
+  });
+
+  //you can set up an interval here to periodically get screen captures
+})
 </script>
 ```
 
@@ -30,8 +35,12 @@ import ScreenCapture from "screen-capture";
 
 const capture = new ScreenCapture();
 
-capture.capture(function(dataUrl) {
-  //do something with the data URL here
+capture.init(function() {
+  capture.capture(function(dataURL) {
+    //do something with the dataURL here
+  });
+
+  //you can set up an interval here to periodically get screen captures
 })
 ```
 

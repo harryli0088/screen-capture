@@ -27,7 +27,6 @@ function ScreenCapture(options={}) {
       console.error("ScreenCapture error: " + err);
     }
   }
-  self.init();
 
   self.stop = function() {
     let tracks = self.video.srcObject.getTracks();
