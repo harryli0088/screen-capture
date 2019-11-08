@@ -1,5 +1,5 @@
 {
-  "name": "screencapture",
+  "name": "screen-capture",
   "version": "1.0.0",
   "description": "capture your screen with pure JavaScript",
   "main": "index.js",
