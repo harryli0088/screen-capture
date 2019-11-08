@@ -3,7 +3,7 @@
 capture your screen with pure JavaScript
 
 ## Usage
-First instantiate ScreenCapture then call the init() function with a callback which will prompt the user for permission. Once the user gives permission, the callback will be fired and you can begin getting screen captures
+First instantiate ScreenCapture, then call the init() function which returns a Promise. This will prompt the user for permission to share the screen. Once the user gives permission, the Promise is resolved and you can begin capturing the screen.
 
 ### HTML
 ```html
@@ -15,12 +15,14 @@ const capture = new ScreenCapture({
   video: document.getElementById("video")
 });
 
-capture.init(function() {
-  capture.capture(function(dataURL) {
+capture.init().then(function() {
+  capture.capture().then(function(dataURL) {
     //do something with the dataURL here
   });
 
-  //you can set up an interval here to periodically get screen captures
+  //you can set an interval here to periodically get screen captures
+}).catch(function(err) {
+  console.log(err); //the user probably denied permission to screen capture
 })
 </script>
 ```
@@ -35,12 +37,14 @@ import ScreenCapture from "screen-capture";
 
 const capture = new ScreenCapture();
 
-capture.init(function() {
-  capture.capture(function(dataURL) {
+capture.init().then(function() {
+  capture.capture().then(function(dataURL) {
     //do something with the dataURL here
   });
 
-  //you can set up an interval here to periodically get screen captures
+  //you can set an interval here to periodically get screen captures
+}).catch(function(err) {
+  console.log(err); //the user probably denied permission to screen capture
 })
 ```
 
@@ -52,3 +56,8 @@ capture.init(function() {
 - `options` {Object}
   - `displayMediaOptions` {Object} optional display media options for video
   - `video` {Object} optional DOM video element, otherwise an invisible video element will be created
+
+## Acknowledgements
+This was created using the examples found here:
+- MDN - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API/Using_Screen_Capture
+- Kaiido - https://stackoverflow.com/a/32708998

@@ -7,25 +7,24 @@ function ScreenCapture(options={}) {
   self.canvas = document.createElement('canvas');
   self.ctx = self.canvas.getContext('2d');
 
-  self.init = async function(callback) {
-    self.displayMediaOptions = options.displayMediaOptions || { audio: false };
-    self.video  = options.video || document.createElement("video");
-    self.video.autoplay = true;
+  self.init = function() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        self.displayMediaOptions = options.displayMediaOptions || { audio: false };
+        self.video  = options.video || document.createElement("video");
+        self.video.autoplay = true;
+        self.video.srcObject = await navigator.mediaDevices.getDisplayMedia(self.displayMediaOptions);
+        self.video.addEventListener('loadedmetadata', function() {
+          //important, otherwise the canvas size won't match the video
+          self.canvas.width = self.video.videoWidth;
+          self.canvas.height = self.video.videoHeight;
 
-    try {
-      self.video.srcObject = await navigator.mediaDevices.getDisplayMedia(self.displayMediaOptions);
-      self.video.addEventListener('loadedmetadata', function() {
-        //important, otherwise the canvas size won't match the video
-        self.canvas.width = self.video.videoWidth;
-        self.canvas.height = self.video.videoHeight;
-
-        if(callback && typeof callback === "function") {
-          callback(); //callback can be used to immediately get a capture
-        }
-      }, false);
-    } catch(err) {
-      console.error("ScreenCapture error: " + err);
-    }
+          resolve();
+        }, false);
+      } catch(err) {
+        reject(err);
+      }
+    });
   }
 
   self.stop = function() {
@@ -35,12 +34,16 @@ function ScreenCapture(options={}) {
   }
 
   self.capture = function(callback) {
-    self.ctx.drawImage(self.video,0,0);
-    const dataURL = self.canvas.toDataURL('image/jpeg');
+    return new Promise((resolve, reject) => {
+      try {
+        self.ctx.drawImage(self.video,0,0);
+        const dataURL = self.canvas.toDataURL('image/jpeg');
 
-    if(callback && typeof callback === "function") {
-      callback(dataURL); //send data url to provided callback
-    }
+        resolve(dataURL);
+      } catch(err) {
+        reject(err);
+      }
+    });
   }
 }
 
