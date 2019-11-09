@@ -33,10 +33,19 @@ function ScreenCapture(options={}) {
     self.video.srcObject = null;
   }
 
-  self.capture = function(callback) {
+  self.capture = function(options={}) {
     return new Promise((resolve, reject) => {
       try {
-        self.ctx.drawImage(self.video,0,0);
+        const sx = options.sx || 0;
+        const sy = options.sy || 0;
+        const sWidth = options.sWidth || self.video.videoWidth;
+        const sHeight = options.sHeight || self.video.videoHeight;
+        const dx = options.dx || 0;
+        const dy = options.dx || 0;
+        const dWidth = options.dWidth || self.canvas.width;
+        const dHeight = options.dHeight || self.canvas.height;
+
+        self.ctx.drawImage(self.video, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
         const dataURL = self.canvas.toDataURL('image/jpeg');
 
         resolve(dataURL);

@@ -65,14 +65,25 @@ capture.init().then(function() {
 })
 ```
 
-### ScreenCapture.capture()
+### ScreenCapture.capture([options])
 Returns a Promise that, when resolved, passes the dataURL of the screen capture
 
 ```js
-capture.capture().then(function(dataURL) {
+capture.capture(options).then(function(dataURL) {
   //do something with the dataURL here
 });
 ```
+
+All function parameters are optional and follow the cxt.drawImage() parameters shown here: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+- `options` {Object}
+  - `sx` {Number} optional source image x offset (defaults to 0)
+  - `sy` {Number} optional source image y offset (defaults to 0)
+  - `sWidth` {Number} optional width of sub-rectangle of source image to draw (defaults to video width)
+  - `sHeight` {Number} optional height of sub-rectangle of source image to draw (defaults to video height)
+  - `dx` {Number} optional destination canvas x offset (defaults to 0)
+  - `dy` {Number} optional destination canvas y offset (defaults to 0)
+  - `dWidth` {Number} optional width to draw on destination canvas (defaults to video width)
+  - `dHeight` {Number} optional height to draw on destination canvas (defaults to video height)
 
 ### ScreenCapture.stop()
 Stops screen sharing
